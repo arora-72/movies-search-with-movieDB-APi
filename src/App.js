@@ -28,12 +28,12 @@ class App extends Component {
 
     // this.state = {rows: moviesRow}
 
-    this.performSearch()
+    this.performSearch("ant man")
 
   }
-  performSearch() {
+  performSearch(searchTerm) {
     console.log("perform search using movieDB")
-    const urlString = "https://api.themoviedb.org/3/search/movie?api_key=5717a33dc3459f672c1daf12b8907f6a&language=en-US&query=marvel"
+    const urlString = "https://api.themoviedb.org/3/search/movie?api_key=5717a33dc3459f672c1daf12b8907f6a&language=en-US&query="+searchTerm
     $.ajax({
       url: urlString,
       success: (searchResults) => {
@@ -59,6 +59,12 @@ class App extends Component {
       
     })
 
+  }
+
+  seachChangeHandler(event){
+    const searchTerm = event.target.value
+    const boundObject = this
+    boundObject.performSearch(searchTerm)
   }
 
 
@@ -88,7 +94,7 @@ class App extends Component {
             paddingTop: 8,
             paddingBotton: 8,
             paddingLeft:16
-          }} placeholder="enter search term"/>
+          }} onChange= {this.seachChangeHandler.bind(this)} placeholder="enter search term"/>
 
           {this.state.rows}
 
